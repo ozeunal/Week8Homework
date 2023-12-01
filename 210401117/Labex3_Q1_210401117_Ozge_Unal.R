@@ -1,6 +1,4 @@
 library(httr)
-Sys.setenv(SPOTIFY_ID="18234d89e4a64d29acc464eea7bc45b4")
-Sys.setenv(SPOTIFY_SECRET="6d420d9ff07c4872b49aba423c888da8")
 
 spotify_artist_top_tracks <- function(artist_id) {
   if (!is.character(artist_id)) stop("Artist ID must be a character type.")
@@ -23,7 +21,8 @@ spotify_artist_top_tracks <- function(artist_id) {
     id = sapply(top_tracks$tracks, function(x) x$id),
     name = sapply(top_tracks$tracks, function(x) x$name),
     album = sapply(top_tracks$tracks, function(x) x$album$name),
-    year = sapply(top_tracks$tracks, function(x) as.Date(x$album$release_date))
+    year = sapply(top_tracks$tracks, function(x) substr(x$album$release_date, 1, 10))
+    ##year = sapply(top_tracks$tracks, function(x) as.Date(x$album$release_date))
   )
   
   # Sanatçı adını almak için ek bir API çağrısı
